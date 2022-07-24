@@ -1,0 +1,279 @@
+<%- include('../partials/Header') %>
+
+  <body>
+
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">LMS</a>
+      <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="navbar-nav">
+        <div class="nav-item text-nowrap">
+          <a class="nav-link px-3"  href="/signout" >Sign out</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+          <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/super/dashboard">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-home" aria-hidden="true">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/super/managers" >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-file" aria-hidden="true">
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                    <polyline points="13 2 13 9 20 9"></polyline>
+                  </svg>
+                  Managers
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/super/managerleaves" >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-file" aria-hidden="true">
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                    <polyline points="13 2 13 9 20 9"></polyline>
+                  </svg>
+                  Managers Leave
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalone">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-layers" aria-hidden="true">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                  </svg>
+                  Add Leaves
+                </a>
+              </li>
+            </ul>
+
+            
+          </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <% if(locals.type && locals.type === "Dashboard"){ %>
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2"><%=type%></h1>
+            
+          </div>
+         
+
+          <div class="row">
+            <div class="col">
+              <h4><%=user.name%></h4>
+              <p><%=user.organization.name%></p>
+              <h6>Department Summary:</h6>
+              
+            </div>
+          </div>
+          
+          
+          
+          <%}%>
+          <% if(locals.type && locals.type === "Managers"){ %>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+              <h1 class="h2"><%=type%></h1>
+              <div class="btn-group me-2">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add</button>
+              </div>
+            </div>
+            <div class="container">
+              
+             
+              <table class="table table-striped custab">
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Manager</th>
+                      <th>Department</th>
+                      <th class="text-center">Action</th>
+                  </tr>
+              </thead>
+
+              <% for( var man of data){%>
+                      <tr>
+                       
+                          <td>1</td>
+                          <td><%=man.name%></td>
+                          <td><%=man.department.name%></td>
+                          <td class="text-center"> <a href="/super/managers/delete/<%= man._id %>/<%= man.department._id %>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                      </tr>
+                  <%}%>
+                  
+              </table>
+
+          </div>
+          
+            <%}%>
+
+          
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Managers</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form action="/super/manager" method="POST">
+                    <div class="mb-3">
+                      <label for="inputName" class="form-label">Name</label>
+                      <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" name="name">
+                    </div>
+                    <div class="mb-3">
+                      <label for="inputName" class="form-label">Email</label>
+                      <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" name="email">
+                    </div>
+                    <div class="mb-3">
+                      <label for="inputName" class="form-label">Phone Number</label>
+                      <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" name="phno">
+                    </div>
+                    <h3>Department Detials</h3>
+                    <div class="mb-3">
+                      <label for="inputName" class="form-label">Department Name</label>
+                      <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" name="deptname">
+                    </div>
+                    <div class="mb-3">
+                      <label for="inputName" class="form-label">Description</label>
+                      <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" name="deptdesc">
+                    </div>
+
+                    <div class="mb-3 form-check">
+                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                      <label class="form-check-label" for="exampleCheck1">Do you approve the manager</label>
+                    </div>
+                    
+                 
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Add Dept</button>
+                </div>
+              </form>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Modal leavetype -->
+          <div class="modal fade" id="exampleModalone" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Leave Type</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form action="/super/leavetype" method="POST">
+                    <div class="mb-3">
+                      <label for="inputName" class="form-label">Name</label>
+                      <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" name="name">
+                    </div>
+                    <div class="mb-3">
+                      <label for="inputName" class="form-label">Desc</label>
+                      <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" name="desc">
+                    </div>
+                    <div class="mb-3">
+                      <label for="inputName" class="form-label">Total</label>
+                      <input type="number" class="form-control" id="inputName" aria-describedby="emailHelp" name="count">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Add Leave</button>
+                </div>
+              </form>
+              </div>
+            </div>
+          </div>
+          <% if(locals.type && locals.type === "ManagerLeaves"){ %>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+              <h1 class="h2"><%=type%></h1>
+
+            </div>
+            <table class="table table-striped custab">
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>user</th>
+                      <th>starting date</th>
+                      <th>ending date</th>
+                      <th>reason</th>
+                      <th>status</th>
+                      <th class="text-center">Action</th>
+                  </tr>
+              </thead>
+              <% for( var lv of data){%>
+                <%
+                var st = new Date(lv.startingdate)
+                var en = new Date(lv.endingdate)
+                var st_string = st.getDate() +"/"+st.getMonth()+"/"+st.getYear()
+                var en_string = en.getDate() +"/"+en.getMonth()+"/"+en.getYear()
+                %>
+                      <tr>
+                          <%if(lv.status === "Approved"){%>
+                          <td><%="🟢"%></td>
+                          <%} else if (lv.status === "Rejected"){%>
+                            <td><%="🔴"%></td>
+                          <%} else{%>
+                           <td><%="⚪"%></td> 
+                           <%}%>
+                          <td><%=lv.user_id.name%></td>
+                          <td><%=st_string%></td>
+                          <td><%=en_string%></td>
+                          <td><%=lv.reason%></td>
+                          <td><%=lv.status%></td>
+                          <td class="text-center"><a href="/super/managerleave/reject/<%= lv._id %>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Reject</a> <a href="/super/managerleave/approve/<%= lv._id %>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-remove"></span> Approve</a></td>
+                      </tr>
+                  <%}%>
+                  
+              </table>
+            <%}%>
+          
+
+
+        
+
+
+        </main>
+        <!-- Button trigger modal -->
+        
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+      integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+      integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
+      crossorigin="anonymous"></script>
+    
+
+
+  </body>
+
+  </html>

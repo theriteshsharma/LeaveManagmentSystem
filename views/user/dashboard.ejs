@@ -1,0 +1,343 @@
+<%- include('../partials/Header') %>
+<body>
+    
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">LMS</a>
+      <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+     
+      <div class="navbar-nav">
+        <div class="nav-item text-nowrap">
+          <a class="nav-link px-3" href="/signout">Sign out</a>
+        </div>
+      </div>
+    </header>
+    
+    <div class="container-fluid">
+      <div class="row  ">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse ">
+          <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/user/dashboard">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/user/leaves" type="button"  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file" aria-hidden="true"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                  Leaves
+                </a>
+              </li>
+              
+            </ul>
+    
+          </div>
+        </nav>
+    
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+          <% if(locals.type && locals.type === "Dashboard"){ %>
+            
+            
+              <div class="container-fluid p-0">
+              <h1 class="h3 mb-3"><%=type%></h1>
+              <div class="row">
+                <div class="col-xl-8">
+                  <div class="card">
+                    <div class="card-header pb-0">
+                      <div class="card-actions float-right">
+                        
+                      </div>
+                      <h5 class="card-title mb-0"> Leaves </h5>
+                    </div>
+                    <div class="card-body">
+                      <table class="table table-striped" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>From</th>
+                            <th>To</th> 
+                            <th>Type</th> 
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <%var i=1
+                           for(var [index,x] of leave.entries()){%>
+                            <%
+                              var st = new Date(x.startingdate)
+                              var en = new Date(x.endingdate)
+                              var st_string = st.toLocaleDateString()
+                              var en_string = en.toLocaleDateString()
+                              
+                              %>
+                          <tr >
+                            <td><%= i++ %> </td>
+                            <td><%= st_string %> </td>
+                            <td><%= en_string %> </td>
+                            <td><%= x.leavetype.name %> </td>
+                            <td><% if (x.status==='Rejected') { %>
+                              <span class="badge bg-danger">Rejected</span></td>
+                            <% } else if (x.status==='Approved') { %>
+                              <span class="badge bg-success">Approved</span></td>
+                            <% } else { %>
+                              <span class="badge bg-primary">Pending</span></td>
+                              <%}%>
+                          </tr> 
+                          <%}%>                       
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header pb-0">
+                      <div class="card-actions float-right">
+                        
+                      </div>
+                      <h5 class="card-title mb-0"> Calender </h5>
+                    </div>
+                    <div class="card-body">
+                      <table class="table table-striped" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>From</th>
+                            <th>To</th> 
+                            <th>Type</th> 
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <%var i=1
+                           for(var [index,x] of leave.entries()){%>
+                            <%
+                              var st = new Date(x.startingdate)
+                              var en = new Date(x.endingdate)
+                              var st_string = st.toLocaleDateString()
+                              var en_string = en.toLocaleDateString()
+                              
+                              %>
+                          <tr>
+                            <td><%= i++ %> </td>
+                            <td><%= st_string %> </td>
+                            <td><%= en_string %> </td>
+                            <td><%= x.leavetype.name %> </td>
+                            <td><% if (x.stauts==='Rejected') { %>
+                              <span class="badge bg-danger">Rejected</span></td>
+                            <% } else if (x.status==='Approved') { %>
+                              <span class="badge bg-success">Approved</span></td>
+                            <% } else { %>
+                              <span class="badge bg-primary">Pending</span></td>
+                              <%}%>
+                          </tr> 
+                          <%}%>                       
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                
+          
+                <div class="col-xl-4">
+                  <div class="card">
+                   
+                    <div class="card-body">
+                      
+          
+                      <table class="table table-sm mt-2 mb-4">
+                        <tbody>
+                          <tr>
+                            <th>Name</th>
+                            <td><%=data.name%></td>
+                          </tr>
+                          <tr>
+                            <th>Department</th>
+                            <td><%=data.department.name%></td>
+                          </tr>
+                          <tr>
+                            <th>Email</th>
+                            <td> <%=data.email%> </td>
+                          </tr>
+                          <tr>
+                            <%var valid = data.isValid ? `<span class="badge bg-success">Active</span>` :` <span class="badge bg-danger">Inactive</span>` %>
+                            <th>Status</th>
+                            <td><%-valid%></td>
+                          </tr>
+                        </tbody>
+                      </table>
+          
+                      <strong>Leaves used</strong>
+                        
+                      <ul class="timeline mt-2 mb-0">
+                        <% for(let t of report){%>
+                        <li class="timeline-item">
+                          <strong><%=t.name%></strong>
+                          <span class="float-right text-muted text-sm"><%=t.used%>/<%=t.total%></span>
+                        </li>
+                        <%}%>
+                        
+                      </ul>
+          
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+          
+            
+          </div>
+            
+            <%}%>
+            <% if(locals.type && locals.type === "Leaves"){ %>
+              <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"><%=type%> </h1>
+                <div class="btn-group me-2">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Request Leave</button>
+                </div>
+              </div>
+              
+              <div class="container">
+               
+               
+                <table class="table table-striped custab">
+                <thead>
+                    <tr>
+                        <th>Starting Date</th>
+                        <th>Ending Date</th>
+                        <th>Leave Type</th>
+                        <th >Status</th>
+                    </tr>
+                </thead>
+                  <tbody>
+                    <%for(let x of pastleave){%>
+                      <%
+                        var st = new Date(x.startingdate)
+                        var en = new Date(x.endingdate)
+                        var st_string = st.toLocaleDateString()
+                        var en_string = en.toLocaleDateString()   
+                      %>
+                    <tr>
+                      <td> <%=st_string%></td>  
+                      <td> <%=en_string%></td>  
+                      <td> <%=x.leavetype.name%></td>  
+                      <td><% if (x.status==='Rejected') { %>
+                              <span class="badge bg-danger">Rejected</span></td>
+                            <% } else if (x.status==='Approved') { %>
+                              <span class="badge bg-success">Approved</span></td>
+                            <% } else { %>
+                              <span class="badge bg-primary">Pending</span></td>
+                              <%}%>
+                      
+                    </tr>
+                    <%}%>
+                
+                  </tbody>
+
+                </table>
+              
+            </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Leave Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/user/leave/request" method="POST">
+                      <div class="mb-3">
+                        <label for="inputName" class="form-label">Starting Date</label>
+                        <input type="date" class="form-control" id="inputName" aria-describedby="emailHelp" name="startingdate">
+                      </div>
+                      <div class="mb-3">
+                        <label for="inputName" class="form-label">Ending Date</label>
+                        <input type="date" class="form-control" id="inputName" aria-describedby="emailHelp" name="endingdate">
+                      </div>
+                      <div class="mb-3">
+                        <select class="form-select" aria-label="Default select example" name="leavetype">
+                          <%console.log(leavetype)%>
+                          <% for(var x of leavetype) {%>
+                          <option value="<%=x._id%>"><%= x.name %></option>
+                          <%}%>
+                          
+                        </select>  
+                      </div>
+                      <div class="mb-3">
+                        <label for="inputName" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" name="reason">
+                      </div>
+  
+                      
+                   
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Request Leave</button>
+                  </div>
+                </form>
+                </div>
+              </div>
+            </div>
+              <%}%>
+  
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Leave Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/super/manager" method="POST">
+                      <div class="mb-3">
+                        <label for="inputName" class="form-label">Starting Date</label>
+                        <input type="date" class="form-control" id="inputName" aria-describedby="emailHelp" name="name">
+                      </div>
+                      <div class="mb-3">
+                        <label for="inputName" class="form-label">Ending Date</label>
+                        <input type="date" class="form-control" id="inputName" aria-describedby="emailHelp" name="email">
+                      </div>
+                      <div class="mb-3">
+                        <label for="inputName" class="form-label">Leave Type</label>
+                        <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" name="deptname">
+                      </div>
+                      <div class="mb-3">
+                        <label for="inputName" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="inputName" aria-describedby="emailHelp" name="deptdesc">
+                      </div>
+  
+                      <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Do you approve the manager</label>
+                      </div>
+                      
+                   
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Dept</button>
+                  </div>
+                </form>
+                </div>
+              </div>
+            </div>
+  
+    
+           
+        </main>
+      </div>
+    </div>
+    
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    
+          <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>
+            
+    
+    </body>
+</html>
